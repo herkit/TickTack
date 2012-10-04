@@ -17,7 +17,7 @@
         </Storyboard>
         <Storyboard x:Key="arcStoryboard" x:Name="arcStoryboard" TargetName="arc"
                             AutoReverse="False"
-                            RepeatBehavior="Forever">
+                            RepeatBehavior="1x" Duration="0:05:00">
             <PointAnimationUsingPath x:Name="pointAnim"
                             Storyboard.TargetProperty="Point"
                             Duration="0:05:00">
@@ -35,6 +35,8 @@
                 <DiscreteBooleanKeyFrame KeyTime="0:2:30" Value="True" />
             </BooleanAnimationUsingKeyFrames>
         </Storyboard>
+        <Color x:Key="Pause" A="255" R="255" G="139" ></Color>
+        <Color x:Key="Working" A="255" B="255" G="139" ></Color>
     </Window.Resources>
     <Canvas x:Name="MainCanvas" MouseEnter="Path_MouseEnter_1" MouseLeave="Path_MouseLeave_1" MouseWheel="Canvas_MouseWheel_1">
         <Path Canvas.Left="0"
