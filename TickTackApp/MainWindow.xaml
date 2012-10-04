@@ -15,12 +15,12 @@
             <DoubleAnimation Storyboard.TargetProperty="ScaleX" AccelerationRatio="0.1" From="1" To="1" Duration="0:00:00.2"></DoubleAnimation>
             <DoubleAnimation Storyboard.TargetProperty="ScaleY" AccelerationRatio="0.1" From="1" To="1" Duration="0:00:00.2"></DoubleAnimation>
         </Storyboard>
-        <Storyboard x:Key="arcStoryboard" x:Name="arcStoryboard" TargetName="arc"
+        <Storyboard x:Key="timerAnimationStoryBoard" TargetName="arc"
                             AutoReverse="False"
-                            RepeatBehavior="1x" Duration="0:05:00">
+                            RepeatBehavior="1x">
             <PointAnimationUsingPath x:Name="pointAnim"
                             Storyboard.TargetProperty="Point"
-                            Duration="0:05:00">
+                            >
                 <PointAnimationUsingPath.PathGeometry>
                     <PathGeometry
                                 Figures="M 0 -100 A 100 100 0 0 1 0 100
@@ -29,11 +29,16 @@
             </PointAnimationUsingPath>
 
             <BooleanAnimationUsingKeyFrames x:Name="boolAnim"
-                            Storyboard.TargetProperty="IsLargeArc"
-                            Duration="0:05:00">
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
-                <DiscreteBooleanKeyFrame KeyTime="0:2:30" Value="True" />
+                            Storyboard.TargetProperty="IsLargeArc">
+                <DiscreteBooleanKeyFrame KeyTime="0%" Value="False" />
+                <DiscreteBooleanKeyFrame KeyTime="50%" Value="True" />
             </BooleanAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="flashingAnimation" RepeatBehavior="Forever">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pie" Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0%" Value="{x:Static Visibility.Hidden}" />
+                <DiscreteObjectKeyFrame KeyTime="50%" Value="{x:Static Visibility.Visible}" />
+            </ObjectAnimationUsingKeyFrames >
         </Storyboard>
         <Color x:Key="Pause" A="255" R="255" G="139" ></Color>
         <Color x:Key="Working" A="255" B="255" G="139" ></Color>

@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace TickTackApp
 {
@@ -32,13 +33,15 @@ namespace TickTackApp
         private State timerState = State.NotStarted;
         private Phase pomodoroPhase = Phase.Pause;
         private Storyboard storyboard;
+        private Storyboard flashing;
 
         public MainWindow()
         {
             InitializeComponent();
-            storyboard = (Storyboard)FindResource("arcStoryboard");
+            storyboard = (Storyboard)FindResource("timerAnimationStoryBoard");
+            flashing = (Storyboard)FindResource("flashingAnimation");
 
-            SetDuration(TimeSpan.FromMinutes(3));
+            SetDuration(TimeSpan.FromMinutes(1));
 
             storyboard.Completed += storyboard_Completed;
 
@@ -52,14 +55,13 @@ namespace TickTackApp
 
         private void SetDuration(TimeSpan duration)
         {
+            storyboard.RepeatBehavior = new RepeatBehavior(duration);
             storyboard.Duration = duration;
             foreach (var anim in storyboard.Children)
             {
+                Debug.WriteLine(anim.Name + " duration before: " + anim.Duration);
                 anim.Duration = duration;
-                if (anim.Name == "boolAnim")
-                {
-                    ((BooleanAnimationUsingKeyFrames)anim).KeyFrames[1].KeyTime = TimeSpan.FromSeconds(duration.TotalSeconds / 2);
-                }
+                Debug.WriteLine(anim.Name + " duration after: " + anim.Duration);
             }
         }
 
@@ -95,10 +97,12 @@ namespace TickTackApp
                     break;
                 case State.Running:
                     storyboard.Pause();
+                    flashing.Begin();
                     timerState = State.Paused;
                     break;
                 case State.Paused:
                     storyboard.Resume();
+                    flashing.Stop();
                     timerState = State.Running;
                     break;
                 default:
@@ -109,9 +113,15 @@ namespace TickTackApp
         private void StartPhase()
         {
             if (pomodoroPhase == Phase.Pause)
+            {
+                SetDuration(TimeSpan.FromMinutes(25));
                 pomodoroPhase = Phase.Working;
+            }
             else
+            {
+                SetDuration(TimeSpan.FromMinutes(5));
                 pomodoroPhase = Phase.Pause;
+            }
 
             var color = (Color)FindResource(pomodoroPhase.ToString());
             pie.Fill = new SolidColorBrush(color);
