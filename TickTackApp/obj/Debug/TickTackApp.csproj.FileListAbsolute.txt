@@ -1,0 +1,13 @@
+F:\Projects\TickTack\TickTackApp\bin\Debug\TickTackApp.exe.config
+F:\Projects\TickTack\TickTackApp\bin\Debug\TickTackApp.exe
+F:\Projects\TickTack\TickTackApp\bin\Debug\TickTackApp.pdb
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.csprojResolveAssemblyReference.cache
+F:\Projects\TickTack\TickTackApp\obj\Debug\MainWindow.baml
+F:\Projects\TickTack\TickTackApp\obj\Debug\MainWindow.g.cs
+F:\Projects\TickTack\TickTackApp\obj\Debug\App.g.cs
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp_MarkupCompile.cache
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.g.resources
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.Properties.Resources.resources
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.csproj.GenerateResource.Cache
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.exe
+F:\Projects\TickTack\TickTackApp\obj\Debug\TickTackApp.pdb
