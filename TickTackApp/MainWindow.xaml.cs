@@ -38,20 +38,13 @@ namespace TickTackApp
         public MainWindow()
         {
             InitializeComponent();
+            
             timer = (Storyboard)FindResource("timerAnimationStoryBoard");
+            timer.Completed += timer_Completed;
+
             flashing = (Storyboard)FindResource("flashingAnimation");
 
-            SetDuration(TimeSpan.FromMinutes(1));
-
-            timer.Completed += storyboard_Completed;
-
-            Controls.Visibility = System.Windows.Visibility.Hidden;            
-        }
-
-        void storyboard_Completed(object sender, EventArgs e)
-        {
-            flashing.Begin();
-            timerState = State.NotStarted;
+            Controls.Visibility = System.Windows.Visibility.Hidden;
         }
 
         private void SetDuration(TimeSpan duration)
@@ -77,19 +70,21 @@ namespace TickTackApp
             ((Rectangle)sender).Opacity = 1;
         }
 
-        private void Path_MouseEnter_1(object sender, MouseEventArgs e)
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             Controls.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void Path_MouseLeave_1(object sender, MouseEventArgs e)
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
             Controls.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void Continue_MouseUp(object sender, MouseButtonEventArgs e)
+        void timer_Completed(object sender, EventArgs e)
         {
-            PauseResume();
+            SetTimerControlIcon("PlayIcon");
+            flashing.Begin();
+            timerState = State.NotStarted;
         }
 
         private void PauseResume()
@@ -112,7 +107,7 @@ namespace TickTackApp
 
         private void Pause()
         {
-            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PlayIcon");
+            SetTimerControlIcon("PlayIcon");
             timer.Pause();
             flashing.Begin();
             timerState = State.Paused;
@@ -120,12 +115,16 @@ namespace TickTackApp
 
         private void Resume()
         {
-            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PauseIcon");
+            SetTimerControlIcon("PauseIcon");
             timer.Resume();
             flashing.Stop();
             timerState = State.Running;
         }
 
+        private void SetTimerControlIcon(string pauseIcon)
+        {
+            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, pauseIcon);
+        }
         private void StartPhase()
         {
             flashing.Stop();
@@ -144,8 +143,9 @@ namespace TickTackApp
             var color = (Color)FindResource(pomodoroPhase.ToString());
             pie.Fill = new SolidColorBrush(color);
 
-            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PauseIcon");
+            SetTimerControlIcon("PauseIcon");
             timer.Begin();
+
             pie.Visibility = System.Windows.Visibility.Visible;
             timerState = State.Running;
         }
