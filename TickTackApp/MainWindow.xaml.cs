@@ -50,6 +50,7 @@ namespace TickTackApp
 
         void storyboard_Completed(object sender, EventArgs e)
         {
+            flashing.Begin();
             timerState = State.NotStarted;
         }
 
@@ -88,8 +89,11 @@ namespace TickTackApp
 
         private void Continue_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            storyboard.Duration = TimeSpan.FromMinutes(2);
+            PauseResume();
+        }
 
+        private void PauseResume()
+        {
             switch (timerState)
             {
                 case State.NotStarted:
@@ -112,6 +116,8 @@ namespace TickTackApp
 
         private void StartPhase()
         {
+            flashing.Stop();
+
             if (pomodoroPhase == Phase.Pause)
             {
                 SetDuration(TimeSpan.FromMinutes(25));
@@ -130,6 +136,7 @@ namespace TickTackApp
             pie.Visibility = System.Windows.Visibility.Visible;
             timerState = State.Running;
         }
+
         private void Reset_MouseUp(object sender, MouseButtonEventArgs e)
         {
             storyboard.Begin();
@@ -148,6 +155,11 @@ namespace TickTackApp
                 anim.To = Math.Min(1, Math.Max(0.25, newscale));
             }
             storyboard.Begin();
+        }
+
+        private void TimerControl_Click(object sender, RoutedEventArgs e)
+        {
+            PauseResume();
         }
     }
 }
