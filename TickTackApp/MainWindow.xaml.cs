@@ -32,18 +32,18 @@ namespace TickTackApp
     {
         private State timerState = State.NotStarted;
         private Phase pomodoroPhase = Phase.Pause;
-        private Storyboard storyboard;
+        private Storyboard timer;
         private Storyboard flashing;
 
         public MainWindow()
         {
             InitializeComponent();
-            storyboard = (Storyboard)FindResource("timerAnimationStoryBoard");
+            timer = (Storyboard)FindResource("timerAnimationStoryBoard");
             flashing = (Storyboard)FindResource("flashingAnimation");
 
             SetDuration(TimeSpan.FromMinutes(1));
 
-            storyboard.Completed += storyboard_Completed;
+            timer.Completed += storyboard_Completed;
 
             Controls.Visibility = System.Windows.Visibility.Hidden;            
         }
@@ -56,9 +56,9 @@ namespace TickTackApp
 
         private void SetDuration(TimeSpan duration)
         {
-            storyboard.RepeatBehavior = new RepeatBehavior(duration);
-            storyboard.Duration = duration;
-            foreach (var anim in storyboard.Children)
+            timer.RepeatBehavior = new RepeatBehavior(duration);
+            timer.Duration = duration;
+            foreach (var anim in timer.Children)
             {
                 Debug.WriteLine(anim.Name + " duration before: " + anim.Duration);
                 anim.Duration = duration;
@@ -100,18 +100,30 @@ namespace TickTackApp
                     StartPhase();
                     break;
                 case State.Running:
-                    storyboard.Pause();
-                    flashing.Begin();
-                    timerState = State.Paused;
+                    Pause();
                     break;
                 case State.Paused:
-                    storyboard.Resume();
-                    flashing.Stop();
-                    timerState = State.Running;
+                    Resume();
                     break;
                 default:
                     break;
             }
+        }
+
+        private void Pause()
+        {
+            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PlayIcon");
+            timer.Pause();
+            flashing.Begin();
+            timerState = State.Paused;
+        }
+
+        private void Resume()
+        {
+            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PauseIcon");
+            timer.Resume();
+            flashing.Stop();
+            timerState = State.Running;
         }
 
         private void StartPhase()
@@ -132,17 +144,15 @@ namespace TickTackApp
             var color = (Color)FindResource(pomodoroPhase.ToString());
             pie.Fill = new SolidColorBrush(color);
 
-            storyboard.Begin();
+            ((Path)TimerControl.Content).SetResourceReference(Path.DataProperty, "PauseIcon");
+            timer.Begin();
             pie.Visibility = System.Windows.Visibility.Visible;
             timerState = State.Running;
         }
 
-        private void Reset_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Reset()
         {
-            storyboard.Begin();
-            pie.Visibility = System.Windows.Visibility.Visible;
-            timerState = State.Running;
-
+            StartPhase();
         }
 
         private void Canvas_MouseWheel_1(object sender, MouseWheelEventArgs e)
@@ -160,6 +170,11 @@ namespace TickTackApp
         private void TimerControl_Click(object sender, RoutedEventArgs e)
         {
             PauseResume();
+        }
+
+        private void ResetB_Click_1(object sender, RoutedEventArgs e)
+        {
+            Reset();
         }
     }
 }
