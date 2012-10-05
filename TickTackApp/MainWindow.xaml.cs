@@ -15,16 +15,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using Settings = TickTackApp.Properties.Settings;
 
 namespace TickTackApp
 {
-    public enum State
-    {
-        NotStarted,
-        Running,
-        Paused,
-    }
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -131,12 +125,12 @@ namespace TickTackApp
 
             if (pomodoroPhase == Phase.Pause)
             {
-                SetDuration(TimeSpan.FromMinutes(25));
+                SetDuration(Settings.Default.FocusLength);
                 pomodoroPhase = Phase.Working;
             }
             else
             {
-                SetDuration(TimeSpan.FromMinutes(5));
+                SetDuration(Settings.Default.BreakLength);
                 pomodoroPhase = Phase.Pause;
             }
 
