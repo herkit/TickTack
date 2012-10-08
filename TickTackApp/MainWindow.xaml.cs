@@ -153,7 +153,7 @@ namespace TickTackApp
         {
             var storyboard = (Storyboard)FindResource("zoom");
             foreach(DoubleAnimation anim in storyboard.Children) {
-                anim.From = anim.To;
+                anim.From = WindowScale.ScaleX;
                 double newscale = (anim.From + ((e.Delta > 0) ? 0.10 : -0.10)).Value;
 
                 anim.To = Math.Min(1, Math.Max(0.25, newscale));
@@ -174,6 +174,18 @@ namespace TickTackApp
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Settings.Default.Zoom = WindowScale.ScaleX;
+            Settings.Default.Save();
+        }
+
+        private void TickTackWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            WindowScale.ScaleX = Settings.Default.Zoom;
+            WindowScale.ScaleY = Settings.Default.Zoom;
         }
     }
 }
