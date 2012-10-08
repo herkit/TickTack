@@ -7,11 +7,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TickTackApp")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TickTack")]
+[assembly: AssemblyDescription("A simple Pomodoro timer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TickTackApp")]
+[assembly: AssemblyCompany("arasoft.no")]
+[assembly: AssemblyProduct("TickTack")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
