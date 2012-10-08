@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using Settings = TickTackApp.Properties.Settings;
+using Settings = TickTack.Properties.Settings;
 
 namespace TickTackApp
 {

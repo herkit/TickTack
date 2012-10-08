@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TickTackApp.Properties {
+namespace TickTack.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
